@@ -1,30 +1,28 @@
 pipeline {
-  agent any
+    agent any
+    
+    environment {
+        FIREBASE_TOKEN = credentials('firebase-token')  // Ensure this matches the environment variable you added in Jenkins
+    }
+    
+    stages {
+        stage('Checkout SCM') {
+            steps {
+                checkout scm
+            }
+        }
+        
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm install'
+            }
+        }
 
-  stages {
-    stage('Build') {
-      steps {
-        // Install Firebase Tools
-        sh 'npm install -g firebase-tools'
-      }
+        stage('Deploy to Firebase') {
+            steps {
+                sh 'firebase deploy --token $FIREBASE_TOKEN'
+            }
+        }
     }
-    stage('Testing') {
-      steps {
-        // Deploy to Firebase Testing
-        sh 'firebase deploy --only hosting:testing'
-      }
-    }
-    stage('Staging') {
-      steps {
-        // Deploy to Firebase Staging
-        sh 'firebase deploy --only hosting:staging'
-      }
-    }
-    stage('Production') {
-      steps {
-        // Deploy to Firebase Production
-        sh 'firebase deploy --only hosting:production'
-      }
-    }
-  }
 }
+
