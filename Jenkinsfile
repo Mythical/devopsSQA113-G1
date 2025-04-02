@@ -2,9 +2,7 @@ pipeline {
     agent any
     
     environment {
-        FIREBASE_TOKEN = credentials('firebase-token')  // Ensure this matches the environment variable you added in Jenkins
-    }
-    
+        FIREBASE_TOKEN = '1//06TpzRf1GxF6kCgYIARAAGAYSNwF-L9Ir5fW1VqTM2fHNFL3rqAGVSukiM_lzEOh_O7LUEBhpbNe41t4HoOwlOHVNcZ0SNf0rHKo'
     stages {
         stage('Checkout SCM') {
             steps {
